@@ -2,12 +2,11 @@
 include 'conexion.php';
 
 $nombre = $_POST['nombre'];
-$area = $_POST['area'];
 $id_jefe = $_POST['id_jefe'];
 
 // 🔥 INSERTAR
-$conn->query("INSERT INTO departamento (nombre, area, id_jefe)
-              VALUES ('$nombre','$area','$id_jefe')");
+$conn->query("INSERT INTO departamento (nombre, id_jefe)
+              VALUES ('$nombre','$id_jefe')");
 
 // 🔥 OBTENER ID NUEVO
 $id_departamento = $conn->insert_id;

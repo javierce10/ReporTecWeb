@@ -158,7 +158,6 @@ function filtrar() {
     const q = document.getElementById('buscador').value.toLowerCase();
     renderTabla(datos.filter(d =>
         (d.nombre ?? '').toLowerCase().includes(q) ||
-        (d.area ?? '').toLowerCase().includes(q) ||
         (d.nombre_jefe ?? '').toLowerCase().includes(q)
     ));
 }
@@ -169,19 +168,17 @@ function renderTabla(lista) {
     tbody.innerHTML = lista.map(d => `<tr>
         <td style="color:var(--gray)">${d.id_departamento}</td>
         <td><strong>${d.nombre}</strong></td>
-        <td>${d.area ?? '-'}</td>
         <td>${d.nombre_jefe ?? '<span style="color:var(--gray)">Sin jefe</span>'}</td>
         <td><div style="display:flex;gap:6px">
-            <button class="btn btn-outline btn-icon btn-sm" onclick="abrirEditar(${d.id_departamento},'${d.nombre.replace(/'/g,"\\'")}','${(d.area??'').replace(/'/g,"\\'")}','${d.id_jefe??''}')"><i class="fas fa-edit"></i></button>
+            <button class="btn btn-outline btn-icon btn-sm" onclick="abrirEditar(${d.id_departamento},'${d.nombre.replace(/'/g,"\\'")}','${d.id_jefe??''}')"><i class="fas fa-edit"></i></button>
             <button class="btn btn-danger btn-sm" onclick="eliminar(${d.id_departamento},'${d.nombre.replace(/'/g,"\\'")}')"><i class="fas fa-trash"></i></button>
         </div></td>
     </tr>`).join('');
 }
 
-function abrirEditar(id, nombre, area, idJefe) {
+function abrirEditar(id, nombre, idJefe) {
     document.getElementById('eId').value = id;
     document.getElementById('eNombre').value = nombre;
-    document.getElementById('eArea').value = area;
     document.getElementById('eJefe').value = idJefe || '';
     document.getElementById('alertaEditar').innerHTML = '';
     openModal('modalEditar');
@@ -190,12 +187,11 @@ function abrirEditar(id, nombre, area, idJefe) {
 async function guardarEdicion() {
     const id = document.getElementById('eId').value;
     const nombre = document.getElementById('eNombre').value.trim();
-    const area = document.getElementById('eArea').value.trim();
     const jefe = document.getElementById('eJefe').value;
     const alerta = document.getElementById('alertaEditar');
     if (!nombre) { alerta.innerHTML = '<div class="alert alert-danger">El nombre es obligatorio.</div>'; return; }
     try {
-        const data = await apiPost('../update_departamento.php', { id_departamento: id, nombre, area, id_jefe: jefe });
+        const data = await apiPost('../update_departamento.php', { id_departamento: id, nombre, id_jefe: jefe });
         if (data.status === 'success') { closeModal('modalEditar'); showToast('Departamento actualizado'); cargarDatos(); }
         else { alerta.innerHTML = `<div class="alert alert-danger">${data.message}</div>`; }
     } catch(e) { alerta.innerHTML = '<div class="alert alert-danger">Error de conexión.</div>'; }
@@ -203,12 +199,11 @@ async function guardarEdicion() {
 
 async function agregar() {
     const nombre = document.getElementById('nNombre').value.trim();
-    const area   = document.getElementById('nArea').value.trim();
     const jefe   = document.getElementById('nJefe').value;
     const alerta = document.getElementById('alertaAgregar');
     if (!nombre) { alerta.innerHTML = '<div class="alert alert-danger">El nombre es obligatorio.</div>'; return; }
     try {
-        const data = await apiPost('../add_departamento.php', { nombre, area, id_jefe: jefe });
+        const data = await apiPost('../add_departamento.php', { nombre, id_jefe: jefe });
         if (data.status === 'success') { closeModal('modalAgregar'); showToast('Departamento creado'); cargarDatos(); }
         else { alerta.innerHTML = `<div class="alert alert-danger">${data.message ?? 'Error.'}</div>`; }
     } catch(e) { alerta.innerHTML = '<div class="alert alert-danger">Error de conexión.</div>'; }

@@ -2,7 +2,7 @@
 include 'conexion.php'; 
 
 // Traemos todos los departamentos y unimos con la tabla 'usuario' para obtener el nombre del jefe
-$query = "SELECT d.id_departamento, d.nombre, d.area, d.id_jefe, u.nombre AS nombre_jefe 
+$query = "SELECT d.id_departamento, d.nombre, d.id_jefe, u.nombre AS nombre_jefe 
           FROM departamento d 
           LEFT JOIN usuario u ON d.id_jefe = u.id_usuario";
 
