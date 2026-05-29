@@ -1,15 +1,6 @@
 <?php
 // reportes_recibidos.php
-header("Content-Type: application/json");
-header("Access-Control-Allow-Origin: *");
-
-$conn = new mysqli("localhost", "root", "", "reportec");
-
-if ($conn->connect_error) {
-    http_response_code(500);
-    echo json_encode(['error' => 'Error de conexión']);
-    exit;
-}
+include 'conexion.php';
 
 $id_usuario = intval($_GET['id_usuario'] ?? 0);
 
