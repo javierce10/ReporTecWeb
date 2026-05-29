@@ -17,10 +17,10 @@ if ($tipo !== 'admin') { header('Location: ../index.php'); exit; }
 <div class="layout">
     <aside class="sidebar">
         <div class="sidebar-header">
-            <div class="sidebar-logo">
-                <div class="icon"><i class="fas fa-shield-alt" style="color:white"></i></div>
-                <span>ReporTec</span>
+            <div class="sidebar-logo-solo">
+                <img src="../imagenes/Logoiti.png" alt="Logo TecNM">
             </div>
+            <div class="sidebar-sub" style="padding-left: 0; text-align: center;">TecNM · Campus Iguala</div>
         </div>
         <div class="sidebar-user">
             <div class="sidebar-avatar"><?= $inicial ?></div>

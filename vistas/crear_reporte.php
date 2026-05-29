@@ -20,7 +20,7 @@ $home = ($tipo === 'admin') ? 'admin.php' : (($tipo === 'jefe') ? 'jefe.php' : '
     <aside class="sidebar">
         <div class="sidebar-header">
             <div class="sidebar-logo-solo">
-                <img src="../imagenes/logoiti.PNG" alt="Logo TecNM">
+                <img src="../imagenes/Logoiti.png" alt="Logo TecNM">
             </div>
             <div class="sidebar-sub" style="padding-left: 0; text-align: center;">TecNM · Campus Iguala</div>
         </div>
